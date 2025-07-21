@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swift | Educational Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* Header */
+    header {
+      background: #004080;
+      color: white;
+      padding: 1rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover, nav a.active {
+      background: #0059b3;
+    }
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,64,128,0.8), rgba(0,64,128,0.8)), url('https://via.placeholder.com/1200x400');
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 5rem 1rem;
+      margin-top: 60px;
+    }
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    /* Middle Image Section */
+    .middle-image {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .middle-image img {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #004080;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    /* Main Content */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .level-section {
+      display: none;
+    }
+    .level-section.active {
+      display: block;
+    }
+    .semester {
+      margin-bottom: 20px;
+      border: 2px solid #004080;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .semester:hover {
+      transform: translateY(-5px);
+    }
+    .semester-header {
+      background-color: #004080;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .course-list {
+      display: none;
+      background: white;
+      padding: 15px;
+    }
+    .course {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+      transition: background 0.2s;
+    }
+    .course:hover {
+      background: #f0f8ff;
+    }
+    .course:last-child {
+      border-bottom: none;
+    }
+    .code-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .unit {
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .outline {
+      margin: 10px 0;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    .drive-link {
+      display: inline-block;
+      background: #004080;
+      color: white;
+      padding: 6px 12px;
+      margin: 5px 5px 0 0;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .drive-link:hover {
+      background: #0059b3;
+    }
+    .manual {
+      display: inline-block;
+      background: #888;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+    .coming-soon {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.5rem;
+      color: #004080;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .middle-image img {
+        max-width: 90%;
+      }
+    }
+    .gpa-calculator {
+  background: #e6f0fa;
+  padding: 1.5rem;
+  margin: 1rem auto;
+  border-radius: 8px;
+  max-width: 80%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.gpa-calculator h3 {
+  color: #004080;
+  margin-bottom: 1rem;
+}
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.form-group label {
+  flex: 1;
+}
+.form-group select {
+  flex: 0.5;
+  padding: 0.5rem;
+  border: 1px solid #004080;
+  border-radius: 5px;
+}
+.submit-btn {
+  background: #004080;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 1rem;
+}
+.submit-btn:hover {
+  background: #0059b3;
+}
+.gpa-result {
+  margin-top: 1rem;
+  color: #004080;
+  font-weight: bold;
+}
+.logo-text {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color:#004080 ;
+  background-color: white;
+  padding: 10px 20px;
+  border: 3px solid #004080;
+  border-radius: 10px;
+  text-decoration: none;
+}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="logo">Swift</div>
+      <ul>
+        <li><a href="#level-100" class="level-link active" aria-current="page">100 Level</a></li>
+        <li><a href="#level-200" class="level-link">200 Level</a></li>
+        <li><a href="#level-300" class="level-link">300 Level</a></li>
+        <li><a href="#level-400" class="level-link">400 Level</a></li>
+        <li><a href="#level-500" class="level-link">500 Level</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Swift</h1>
+    <p id="hero-text">Access comprehensive course resources for your academic journey, starting with 100 Level courses in Chemical Engineering.</p>
+  </section>
+
+  <!-- Middle Image Section -->
+<section class="middle-image">
+ <a href="#" class="logo-text">
+  Chemical Engineering 24/25
+</a>
+
+  <!-- Main Content -->
+  <main>
+    <!-- 100 Level Section -->
+ <section id="level-100" class="level-section active">
+  <div class="semester">
+    <div class="semester-header" onclick="toggleSemester('sem1')" role="button" aria-expanded="false" aria-controls="sem1">
+      📘 100 Level – 1st Semester
+    </div>
+    <div class="course-list" id="sem1">
+      <div class="course">
+        <div class="code-title">GST 111 – Communication in English <span class="unit">(2 C)</span></div>
+        <div class="outline">Sounds and sound patterns in English... public speaking.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1fE9J3iXA-Y3Rdw_PEeW-TbWOHKbnJz-W">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">GET 101 – Engineer in Society <span class="unit">(1 C)</span></div>
+        <div class="outline">History, evolution and philosophy... associations.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1hGe9-YG0AgN33t1vY5Pe33mLHgumXo5M">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">CHM-CM101 – General Chemistry I <span class="unit">(2 C)</span></div>
+        <div class="outline">Atoms, molecules, elements... electrochemistry. Radioactivity.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1hy4vN55qXRjxh-_3s6NkUAvMXzRJBA70">Drive Link 1</a>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1e-_qXfgRPBVRTH2JvJKLkHu0o2ggR67A">Drive Link 2</a>
+      </div>
+      <div class="course">
+        <div class="code-title">CHM-CM107 – General Practical Chemistry I <span class="unit">(1 C)</span></div>
+        <div class="outline">Lab experiments reflecting CHM 101 and 102 topics.</div>
+        <span class="manual">Manual Required</span>
+      </div>
+      <div class="course">
+        <div class="code-title">MTH 101 – Elementary Mathematics I <span class="unit">(2 C)</span></div>
+        <div class="outline">Elementary set theory... addition and factor formulae.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1hinNFZNgIbnuvbBcuHPsgyqteekHKk1z">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">PHY-CM101 – General Physics I <span class="unit">(2 C)</span></div>
+        <div class="outline">Space and time... satellites motion and orbits.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1qRXF1sAVujI_XZ5TDJKNXwzlViaYagaI">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">PHY-CM103 – General Physics III <span class="unit">(2 C)</span></div>
+        <div class="outline">Heat and temperature... drops and bubbles.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1z6x0ogzt9X9mrIHMZs0ts91RjzuXBNUY">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">TCH 101 – Introduction to Chemical Engineering <span class="unit">(2 C)</span></div>
+        <div class="outline">The role of the chemical engineer... government and academia.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1rhLZ4jZKEmYAoBhTNK4pOHrYEt8SyzDJ">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">PHY-CM107 – General Practical Physics I <span class="unit">(1 C)</span></div>
+        <div class="outline">Intro to measurements, errors, physical systems, etc.</div>
+        <span class="manual">Manual Required</span>
+      </div>
+      <div class="course">
+        <div class="code-title">LAG-GET103 – Engineering Applied Mathematics <span class="unit">(2 C)</span></div>
+        <div class="outline">Vectors, coordinate geometry, forces, momentum, etc.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1hi8-tevDjnO_MPEJkNu2WyrAuv0EaVMJ">Drive Link</a>
+      </div>
+    </div>
+    <!-- 1st Semester GPA Calculator -->
+    <button class="toggle-gpa-btn" onclick="toggleGPA(this)" style="margin-top: 5px; padding: 6px 12px; background-color: #d9e6ff; border: none; border-radius: 6px; cursor: pointer;">
+ Also Show GPA Calculator
+</button>
+    <div style="display:none;" class="gpa-calculator" id="gpa-calculator-sem1">
+      <h3>1st Semester GPA Calculator</h3>
+      <form id="gpa-form-sem1">
+        <div class="form-group">
+          <label for="gst111-grade">GST 111 (2 C):</label>
+          <select id="gst111-grade" aria-label="Grade for GST 111">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="get101-grade">GET 101 (1 C):</label>
+          <select id="get101-grade" aria-label="Grade for GET 101">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chm101-grade">CHM-CM101 (2 C):</label>
+          <select id="chm101-grade" aria-label="Grade for CHM-CM101">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chm107-grade">CHM-CM107 (1 C):</label>
+          <select id="chm107-grade" aria-label="Grade for CHM-CM107">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mth101-grade">MTH 101 (2 C):</label>
+          <select id="mth101-grade" aria-label="Grade for MTH 101">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phy101-grade">PHY-CM101 (2 C):</label>
+          <select id="phy101-grade" aria-label="Grade for PHY-CM101">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phy103-grade">PHY-CM103 (2 C):</label>
+          <select id="phy103-grade" aria-label="Grade for PHY-CM103">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tch101-grade">TCH 101 (2 C):</label>
+          <select id="tch101-grade" aria-label="Grade for TCH 101">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phy107-grade">PHY-CM107 (1 C):</label>
+          <select id="phy107-grade" aria-label="Grade for PHY-CM107">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="lag103-grade">LAG-GET103 (2 C):</label>
+          <select id="lag103-grade" aria-label="Grade for LAG-GET103">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-btn">Calculate GPA</button>
+      </form>
+      <div id="gpa-result-sem1" class="gpa-result"></div>
+    </div>
+  </div>
+  <div class="semester">
+    <div class="semester-header" onclick="toggleSemester('sem2')" role="button" aria-expanded="false" aria-controls="sem2">
+      📘 100 Level – 2nd Semester
+    </div>
+    <div class="course-list" id="sem2">
+      <div class="course">
+        <div class="code-title">GST 112 – Nigerian People and Culture <span class="unit">(2 C)</span></div>
+        <div class="outline">Nigerian history, culture, colonial rule, political development, military rule, trade, social justice, moral re-orientation, and current socio-political developments.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1xj_R4V3kWmZEISjamyc16iUvsXUw92Vp">Drive Link 1</a>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1eveV4ZM3tyGHYMbsOzmm6nVUy1UV_0WD">Drive Link 2</a>
+      </div>
+      <div class="course">
+        <div class="code-title">GET 102 – Engineering Graphics and Solid Modelling I <span class="unit">(2 C)</span></div>
+        <div class="outline">Design thinking, orthogonal and isometric projections, sectioning, conic sections, sketching, solid modelling, prototyping, rendering, shop drawings, and material selection using tools like Fusion 360, SolidWorks, Solid Edge.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1hZZzsLHPbVy9vvkXlINnd9aN6MNDBExR">Drive Link 1</a>
+        <a class="drive-link" href="https://www.mediafire.com/folder/nmsj77vp3ebtx/GET102">Drive Link 2</a>
+      </div>
+      <div class="course">
+        <div class="code-title">CHM-CM102 – General Chemistry II <span class="unit">(2 C)</span></div>
+        <div class="outline">Organic chemistry development, electronic theory, purification, nomenclature, functional groups, reaction mechanisms, kinetics, stereochemistry, hydrocarbons, alcohols, ethers, amines, halides, nitriles, carbonyls, acids, metals, non-metals, and transition metal chemistry.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1e_rFTiWPEkaGrX9MdedGlmjoa-Kljhad">Drive Link 1</a>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1Vesr5Q9qWcg1NdPcjXqzOVm4EZW_rQDS">Drive Link 2</a>
+      </div>
+      <div class="course">
+        <div class="code-title">CHM-CM108 – General Practical Chemistry II <span class="unit">(1 C)</span></div>
+        <div class="outline">Functional group analysis, quantitative analysis using volumetric methods, and supplementary lab experiments from CHM 107.</div>
+        <span class="manual">Manual Required</span>
+      </div>
+      <div class="course">
+        <div class="code-title">MTH 102 – Elementary Mathematics II <span class="unit">(2 C)</span></div>
+        <div class="outline">Functions, graphs, limits, continuity, differentiation techniques, maxima and minima, curve sketching, integration, definite integrals, reduction formulae, applications to areas and volumes, and approximate integration.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1eZdWiM_OkwI9OAxJ5F2PTNDV5YZh5B4D">Drive Link 1</a>
+        <a class="drive-link" href="https://www.mediafire.com/folder/xr0hy6aawjexm/MTH102">Drive Link 2</a>
+      </div>
+      <div class="course">
+        <div class="code-title">PHY-CM108 – General Practical Physics II <span class="unit">(1 C)</span></div>
+        <div class="outline">Quantitative measurements, graphical analysis, measurement errors, uncertainty, observation, data collection, and basic lab techniques.</div>
+        <span class="manual">Manual Required</span>
+      </div>
+      <div class="course">
+        <div class="code-title">MTH 103 – Elementary Mathematics III <span class="unit">(2 C)</span></div>
+        <div class="outline">Vectors, scalar and vector products, differentiation and integration of vectors, 2D coordinate geometry, kinematics, forces, momentum, gravity, projectiles, elastic strings, pendulums, impulse, and impact.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1eWFhHqs5r-eLKzq05SwmzAW5vUGxd2J_">Drive Link 1</a>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1hi8-tevDjnO_MPEJkNu2WyrAuv0EaVMJ">Drive Link 2</a>
+      </div>
+      <div class="course">
+        <div class="code-title">PHY-CM102 – General Physics II <span class="unit">(2 C)</span></div>
+        <div class="outline">Electrostatics, electric fields, potential, capacitance, DC circuits, magnetic fields, Lorentz force, Ampère’s law, electromotive force, Faraday’s and Lenz’s laws, AC circuits, and Maxwell’s equations.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1efyTPA_LKfCFnsezCD7xvQvS50ScT8W-">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">PHY-CM104 – General Physics IV (Vibration, Waves and Optics) <span class="unit">(2 C)</span></div>
+        <div class="outline">Simple harmonic motion, damped/forced oscillations, resonance, wave types, superposition, interference, diffraction, Doppler effect, sound propagation, light, reflection, refraction, thin lenses, and wave optics.</div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1eckydCmjPTTsJInv0T6JYHi1tibEFku8">Drive Link</a>
+      </div>
+      <div class="course">
+        <div class="code-title">STA 112 – Probability I <span class="unit">(3 C)</span></div>
+        <div class="outline">Permutations, combinations, probability principles, random variables, probability distributions, binomial, geometric, Poisson, normal distributions, sampling distributions, and exploratory data analysis.</div>
+        <a class="drive-link" href="https://www.mediafire.com/folder/449mmi7mh3lt5/STA112">Drive Link</a>
+      </div>
+    </div>
+    <!-- 2nd Semester GPA Calculator -->
+        <button class="toggle-gpa-btn" onclick="toggleGPA(this)" style="margin-top: 5px; padding: 6px 12px; background-color: #d9e6ff; border: none; border-radius: 6px; cursor: pointer;">
+ Also Show GPA Calculator
+</button>
+    <div style="display:none;" class="gpa-calculator" id="gpa-calculator-sem2">
+      <h3>2nd Semester GPA Calculator</h3>
+      <form id="gpa-form-sem2">
+        <div class="form-group">
+          <label for="gst112-grade">GST 112 (2 C):</label>
+          <select id="gst112-grade" aria-label="Grade for GST 112">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="get102-grade">GET 102 (2 C):</label>
+          <select id="get102-grade" aria-label="Grade for GET 102">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chm102-grade">CHM-CM102 (2 C):</label>
+          <select id="chm102-grade" aria-label="Grade for CHM-CM102">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chm108-grade">CHM-CM108 (1 C):</label>
+          <select id="chm108-grade" aria-label="Grade for CHM-CM108">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mth102-grade">MTH 102 (2 C):</label>
+          <select id="mth102-grade" aria-label="Grade for MTH 102">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phy108-grade">PHY-CM108 (1 C):</label>
+          <select id="phy108-grade" aria-label="Grade for PHY-CM108">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mth103-grade">MTH 103 (2 C):</label>
+          <select id="mth103-grade" aria-label="Grade for MTH 103">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phy102-grade">PHY-CM102 (2 C):</label>
+          <select id="phy102-grade" aria-label="Grade for PHY-CM102">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phy104-grade">PHY-CM104 (2 C):</label>
+          <select id="phy104-grade" aria-label="Grade for PHY-CM104">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sta112-grade">STA 112 (3 C):</label>
+          <select id="sta112-grade" aria-label="Grade for STA 112">
+            <option value="0">Select Grade</option>
+            <option value="5.0">A</option>
+            <option value="4.0">B</option>
+            <option value="3.0">C</option>
+            <option value="2.0">D</option>
+            <option value="1.0">E</option>
+            <option value="0.0">F</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-btn">Calculate GPA</button>
+      </form>
+      <div id="gpa-result-sem2" class="gpa-result"></div>
+    </div>
+  </div>
+</section>
+
+    <!-- 200 Level Section -->
+    <section id="level-200" class="level-section">
+      <div class="coming-soon">Coming Soon</div>
+    </section>
+
+    <!-- 300 Level Section -->
+    <section id="level-300" class="level-section">
+      <div class="coming-soon">Coming Soon</div>
+    </section>
+
+    <!-- 400 Level Section -->
+    <section id="level-400" class="level-section">
+      <div class="coming-soon">Coming Soon</div>
+    </section>
+
+    <!-- 500 Level Section -->
+    <section id="level-500" class="level-section">
+      <div class="coming-soon">Coming Soon</div>
+    </section>
+  </main>
+
+  <script>
+    // Toggle Semester
+    function toggleSemester(id) {
+      const el = document.getElementById(id);
+      const header = el.previousElementSibling;
+      const isExpanded = el.style.display === 'block';
+      el.style.display = isExpanded ? 'none' : 'block';
+      header.setAttribute('aria-expanded', !isExpanded);
+    }
+
+    // Toggle Level Sections and Update Hero Text
+    document.querySelectorAll('.level-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const levelNumber = targetId.split('-')[1];
+        document.querySelectorAll('.level-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        document.getElementById(targetId).classList.add('active');
+        document.querySelectorAll('.level-link').forEach(l => {
+          l.classList.remove('active');
+        });
+        link.classList.add('active');
+        // Update hero text
+        const heroText = document.getElementById('hero-text');
+        heroText.textContent = `Access comprehensive course resources for your academic journey, starting with ${levelNumber} Level courses in Chemical Engineering.`;
+      });
+    });
+    
+    // GPA Calculator Logic
+let sem1GPA = null;
+let sem2GPA = null;
+let sem1QualityPoints = 0;
+let sem2QualityPoints = 0;
+
+document.getElementById('gpa-form-sem1').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const grades = [
+    { id: 'gst111-grade', units: 2 },
+    { id: 'get101-grade', units: 1 },
+    { id: 'chm101-grade', units: 2 },
+    { id: 'chm107-grade', units: 1 },
+    { id: 'mth101-grade', units: 2 },
+    { id: 'phy101-grade', units: 2 },
+    { id: 'phy103-grade', units: 2 },
+    { id: 'tch101-grade', units: 2 },
+    { id: 'phy107-grade', units: 1 },
+    { id: 'lag103-grade', units: 2 }
+  ];
+  let totalQualityPoints = 0;
+  let totalUnits = 17;
+  let allSelected = true;
+
+  grades.forEach(course => {
+    const grade = parseFloat(document.getElementById(course.id).value);
+    if (grade === 0) {
+      allSelected = false;
+    } else {
+      totalQualityPoints += grade * course.units;
+    }
+  });
+
+  if (!allSelected) {
+    document.getElementById('gpa-result-sem1').textContent = 'Please select a grade for all courses.';
+    return;
+  }
+
+  sem1GPA = (totalQualityPoints / totalUnits).toFixed(2);
+  sem1QualityPoints = totalQualityPoints;
+  document.getElementById('gpa-result-sem1').textContent = `Your 1st Semester GPA is ${sem1GPA}`;
+
+  if (sem1GPA && sem2GPA) {
+    const totalCGPA = ((sem1QualityPoints + sem2QualityPoints) / 36).toFixed(2);
+    alert(`Your CGPA for 100 Level is ${totalCGPA}`);
+  }
+});
+
+document.getElementById('gpa-form-sem2').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const grades = [
+    { id: 'gst112-grade', units: 2 },
+    { id: 'get102-grade', units: 2 },
+    { id: 'chm102-grade', units: 2 },
+    { id: 'chm108-grade', units: 1 },
+    { id: 'mth102-grade', units: 2 },
+    { id: 'phy108-grade', units: 1 },
+    { id: 'mth103-grade', units: 2 },
+    { id: 'phy102-grade', units: 2 },
+    { id: 'phy104-grade', units: 2 },
+    { id: 'sta112-grade', units: 3 }
+  ];
+  let totalQualityPoints = 0;
+  let totalUnits = 19;
+  let allSelected = true;
+
+  grades.forEach(course => {
+    const grade = parseFloat(document.getElementById(course.id).value);
+    if (grade === 0) {
+      allSelected = false;
+    } else {
+      totalQualityPoints += grade * course.units;
+    }
+  });
+
+  if (!allSelected) {
+    document.getElementById('gpa-result-sem2').textContent = 'Please select a grade for all courses.';
+    return;
+  }
+
+  sem2GPA = (totalQualityPoints / totalUnits).toFixed(2);
+  sem2QualityPoints = totalQualityPoints;
+  document.getElementById('gpa-result-sem2').textContent = `Your 2nd Semester GPA is ${sem2GPA}`;
+
+  if (sem1GPA && sem2GPA) {
+    const totalCGPA = ((sem1QualityPoints + sem2QualityPoints) / 36).toFixed(2);
+    alert(`Your CGPA for 100 Level is ${totalCGPA}`);
+  }
+});
+function toggleGPA(button) {
+  const calculator = button.nextElementSibling;
+  const isVisible = calculator.style.display === 'block';
+  calculator.style.display = isVisible ? 'none' : 'block';
+  button.textContent = isVisible ? 'Show GPA Calculator' : 'Hide GPA Calculator';
+}
+  </script>
+</body>
+</html>
